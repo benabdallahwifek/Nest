@@ -18,7 +18,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { nanoid } from 'nanoid';
 import { ResetToken } from './schemas/reset-token.schema';
 import { MailService } from 'src/services/mail.service';
-import { RolesService } from 'src/roles/roles.service';
 import { Permission } from 'src/guards/authorization.guard';
 
 @Injectable()
@@ -37,7 +36,6 @@ export class AuthService {
     private ResetTokenModel: Model<ResetToken>,
     private jwtService: JwtService,
     private mailService: MailService,
-    private rolesService: RolesService,
   ) {}
 
   async signup(signupData: SignupDto) {

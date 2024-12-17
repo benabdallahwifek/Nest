@@ -9,8 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CheckInSchema = exports.CheckIn = void 0;
+exports.CheckInSchema = exports.CheckIn = exports.MoodDescription = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
+var MoodDescription;
+(function (MoodDescription) {
+    MoodDescription["Angry"] = "Angry \uD83D\uDE21";
+    MoodDescription["Sad"] = "Sad \uD83D\uDE1F";
+    MoodDescription["Neutral"] = "Neutral \uD83D\uDE10";
+    MoodDescription["Content"] = "Content \uD83D\uDE42";
+    MoodDescription["Happy"] = "Happy \uD83D\uDE0A";
+})(MoodDescription = exports.MoodDescription || (exports.MoodDescription = {}));
 let CheckIn = class CheckIn {
 };
 __decorate([
@@ -22,8 +30,8 @@ __decorate([
     __metadata("design:type", String)
 ], CheckIn.prototype, "date", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", Number)
+    (0, mongoose_1.Prop)({ required: true, enum: MoodDescription }),
+    __metadata("design:type", String)
 ], CheckIn.prototype, "mood", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: [String], default: [] }),

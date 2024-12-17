@@ -25,10 +25,17 @@
 /// <reference types="mongoose/types/inferrawdoctype" />
 import { Document } from 'mongoose';
 export type CheckInDocument = CheckIn & Document;
+export declare enum MoodDescription {
+    Angry = "Angry \uD83D\uDE21",
+    Sad = "Sad \uD83D\uDE1F",
+    Neutral = "Neutral \uD83D\uDE10",
+    Content = "Content \uD83D\uDE42",
+    Happy = "Happy \uD83D\uDE0A"
+}
 export declare class CheckIn {
     userId: string;
     date: string;
-    mood: number;
+    mood: MoodDescription;
     discomforts: string[];
     elaboration: string;
 }

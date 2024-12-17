@@ -5,7 +5,6 @@ import { AuthModule } from './User/User.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RolesModule } from './roles/roles.module';
 import { ToDoModule } from './todo/todo.module';
 import { ConsultationScheduleModule } from './consultation-schedule/consultation-schedule.module';
 import { ConsultationScheduleController } from './consultation-schedule/consultation-schedule.controller';
@@ -46,7 +45,6 @@ import { PredictionModule } from './prediction/prediction.module';
     }),
     CheckInModule,
     AuthModule,
-    RolesModule,
     ToDoModule,
     CategoryModule,
     ConsultationScheduleModule,
