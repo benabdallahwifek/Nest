@@ -1,5 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaTypes, Types } from 'mongoose';
+
+
+export type UserDocument = User & Document;
+
+export enum UserRole {
+  UserNormal = 'usernormal',
+  Medecin = 'medecin',
+}
+
+
 @Schema()
 export class User extends Document {
   @Prop({ required: true })
@@ -17,8 +27,8 @@ export class User extends Document {
   @Prop({ required: true })
   imageUri: string;
 
-  @Prop({ required: false, type: SchemaTypes.ObjectId })
-  roleId?: Types.ObjectId;
+  @Prop({ required: true, enum: UserRole, default: UserRole.UserNormal })
+  role: UserRole;
 
   @Prop({ type: [{ doctorName: String, category: String }], default: [] })
   selectedDoctors: { doctorName: string; category: string }[];

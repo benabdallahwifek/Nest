@@ -24,7 +24,6 @@ const uuid_1 = require("uuid");
 const nanoid_1 = require("nanoid");
 const reset_token_schema_1 = require("./schemas/reset-token.schema");
 const mail_service_1 = require("../services/mail.service");
-const roles_service_1 = require("../roles/roles.service");
 let AuthService = class AuthService {
     getUserRecommendations(userId) {
         throw new Error('Method not implemented.');
@@ -32,42 +31,29 @@ let AuthService = class AuthService {
     saveUserSelection(userId, doctorName, category) {
         throw new Error('Method not implemented.');
     }
-    constructor(UserModel, RefreshTokenModel, ResetTokenModel, jwtService, mailService, rolesService) {
+    constructor(UserModel, RefreshTokenModel, ResetTokenModel, jwtService, mailService) {
         this.UserModel = UserModel;
         this.RefreshTokenModel = RefreshTokenModel;
         this.ResetTokenModel = ResetTokenModel;
         this.jwtService = jwtService;
         this.mailService = mailService;
-        this.rolesService = rolesService;
     }
     async signup(signupData) {
-        const { username, email, password, bio, imageUri } = signupData;
-        console.log('Données d\'inscription reçues :', signupData);
-        console.log('Vérification de l\'email...');
+        const { username, email, password, bio, imageUri, role } = signupData;
         const emailInUse = await this.UserModel.findOne({ email });
         if (emailInUse) {
-            console.log('Erreur : L\'email est déjà utilisé.');
             throw new common_1.BadRequestException('Email already in use');
         }
-        console.log('Création du mot de passe haché...');
         const hashedPassword = await bcrypt.hash(password, 10);
-        console.log('Mot de passe haché :', hashedPassword);
-        try {
-            console.log('Création de l\'utilisateur...');
-            const newUser = await this.UserModel.create({
-                username,
-                email,
-                password: hashedPassword,
-                bio,
-                imageUri,
-            });
-            console.log('Utilisateur créé avec succès :', newUser);
-            return newUser;
-        }
-        catch (error) {
-            console.log('Erreur lors de la création de l\'utilisateur:', error);
-            throw new common_1.InternalServerErrorException('Erreur lors de la création de l\'utilisateur');
-        }
+        const newUser = await this.UserModel.create({
+            username,
+            email,
+            password: hashedPassword,
+            bio,
+            imageUri,
+            role: role || user_schema_1.UserRole.UserNormal,
+        });
+        return newUser;
     }
     async login(credentials) {
         const { email, password } = credentials;
@@ -179,8 +165,7 @@ AuthService = __decorate([
         mongoose_2.Model,
         mongoose_2.Model,
         jwt_1.JwtService,
-        mail_service_1.MailService,
-        roles_service_1.RolesService])
+        mail_service_1.MailService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=User.service.js.map

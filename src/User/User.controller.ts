@@ -7,8 +7,12 @@ import { AuthenticationGuard } from 'src/guards/authentication.guard';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { AuthService } from './User.service';
+import { RoleGuard } from '../role/role.guard';
+import { UserRole } from './schemas/user.schema';
+import { Role } from 'src/role/role.decorator';
 
 @Controller('auth')
+@UseGuards(RoleGuard) // Active le RoleGuard pour tout le contrôleur
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -21,7 +25,6 @@ export class AuthController {
     return this.authService.saveUserSelection(body.userId, body.doctorName, body.category);
   }
 
-  
   @Post('signup')
   async signUp(@Body() signupData: SignupDto) {
     return this.authService.signup(signupData);
@@ -63,5 +66,19 @@ export class AuthController {
       resetPasswordDto.newPassword,
       resetPasswordDto.resetToken,
     );
+  }
+
+  @UseGuards(AuthenticationGuard)
+  @Role(UserRole.Medecin) // Seuls les utilisateurs ayant le rôle "medecin" peuvent accéder
+  @Get('medecin/dashboard')
+  getMedecinDashboard() {
+    return { message: 'Bienvenue sur le tableau de bord des médecins.' };
+  }
+
+  @UseGuards(AuthenticationGuard)
+  @Role(UserRole.UserNormal) // Seuls les utilisateurs ayant le rôle "usernormal" peuvent accéder
+  @Get('user/dashboard')
+  getUserDashboard() {
+    return { message: 'Bienvenue sur le tableau de bord des utilisateurs normaux.' };
   }
 }

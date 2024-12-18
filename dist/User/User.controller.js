@@ -22,6 +22,9 @@ const authentication_guard_1 = require("../guards/authentication.guard");
 const forgot_password_dto_1 = require("./dtos/forgot-password.dto");
 const reset_password_dto_1 = require("./dtos/reset-password.dto");
 const User_service_1 = require("./User.service");
+const role_guard_1 = require("../role/role.guard");
+const user_schema_1 = require("./schemas/user.schema");
+const role_decorator_1 = require("../role/role.decorator");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -49,6 +52,12 @@ let AuthController = class AuthController {
     }
     async resetPassword(resetPasswordDto) {
         return this.authService.resetPassword(resetPasswordDto.newPassword, resetPasswordDto.resetToken);
+    }
+    getMedecinDashboard() {
+        return { message: 'Bienvenue sur le tableau de bord des médecins.' };
+    }
+    getUserDashboard() {
+        return { message: 'Bienvenue sur le tableau de bord des utilisateurs normaux.' };
     }
 };
 __decorate([
@@ -109,8 +118,25 @@ __decorate([
     __metadata("design:paramtypes", [reset_password_dto_1.ResetPasswordDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "resetPassword", null);
+__decorate([
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
+    (0, role_decorator_1.Role)(user_schema_1.UserRole.Medecin),
+    (0, common_1.Get)('medecin/dashboard'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getMedecinDashboard", null);
+__decorate([
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
+    (0, role_decorator_1.Role)(user_schema_1.UserRole.UserNormal),
+    (0, common_1.Get)('user/dashboard'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getUserDashboard", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
+    (0, common_1.UseGuards)(role_guard_1.RoleGuard),
     __metadata("design:paramtypes", [User_service_1.AuthService])
 ], AuthController);
 exports.AuthController = AuthController;

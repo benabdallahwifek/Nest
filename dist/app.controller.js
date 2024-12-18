@@ -16,7 +16,10 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
 const authentication_guard_1 = require("./guards/authentication.guard");
+const permissions_decorator_1 = require("./decorators/permissions.decorator");
 const authorization_guard_1 = require("./guards/authorization.guard");
+const resource_enum_1 = require("./role/enums/resource.enum");
+const action_enum_1 = require("./role/enums/action.enum");
 let AppController = class AppController {
     constructor(appService) {
         this.appService = appService;
@@ -26,6 +29,7 @@ let AppController = class AppController {
     }
 };
 __decorate([
+    (0, permissions_decorator_1.Permissions)([{ resource: resource_enum_1.Resource.SETTINGS, actions: [action_enum_1.Action.READ] }]),
     (0, common_1.Get)(),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),

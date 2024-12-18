@@ -23,14 +23,19 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 /// <reference types="mongoose/types/inferrawdoctype" />
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
+export type UserDocument = User & Document;
+export declare enum UserRole {
+    UserNormal = "usernormal",
+    Medecin = "medecin"
+}
 export declare class User extends Document {
     username: string;
     email: string;
     password: string;
     bio: string;
     imageUri: string;
-    roleId?: Types.ObjectId;
+    role: UserRole;
     selectedDoctors: {
         doctorName: string;
         category: string;

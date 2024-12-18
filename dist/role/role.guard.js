@@ -9,22 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoleSchema = exports.Role = void 0;
-const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
-let Role = class Role extends mongoose_2.Document {
+exports.RoleGuard = void 0;
+const common_1 = require("@nestjs/common");
+const core_1 = require("@nestjs/core");
+let RoleGuard = class RoleGuard {
+    constructor(reflector) {
+        this.reflector = reflector;
+    }
+    canActivate(context) {
+        const requiredRole = this.reflector.get('role', context.getHandler());
+        if (!requiredRole) {
+            return true;
+        }
+        const request = context.switchToHttp().getRequest();
+        const user = request.user;
+        return (user === null || user === void 0 ? void 0 : user.role) === requiredRole;
+    }
 };
-__decorate([
-    (0, mongoose_1.Prop)({ required: true, unique: true }),
-    __metadata("design:type", String)
-], Role.prototype, "name", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ default: [] }),
-    __metadata("design:type", Array)
-], Role.prototype, "permissions", void 0);
-Role = __decorate([
-    (0, mongoose_1.Schema)()
-], Role);
-exports.Role = Role;
-exports.RoleSchema = mongoose_1.SchemaFactory.createForClass(Role);
-//# sourceMappingURL=role.schema.js.map
+RoleGuard = __decorate([
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [core_1.Reflector])
+], RoleGuard);
+exports.RoleGuard = RoleGuard;
+//# sourceMappingURL=role.guard.js.map

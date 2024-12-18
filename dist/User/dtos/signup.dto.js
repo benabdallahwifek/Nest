@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SignupDto = void 0;
 const class_validator_1 = require("class-validator");
+const user_schema_1 = require("../schemas/user.schema");
 class SignupDto {
 }
 __decorate([
@@ -35,5 +36,10 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], SignupDto.prototype, "imageUri", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(user_schema_1.UserRole),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], SignupDto.prototype, "role", void 0);
 exports.SignupDto = SignupDto;
 //# sourceMappingURL=signup.dto.js.map

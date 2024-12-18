@@ -15,13 +15,13 @@ const user_schema_1 = require("./schemas/user.schema");
 const refresh_token_schema_1 = require("./schemas/refresh-token.schema");
 const reset_token_schema_1 = require("./schemas/reset-token.schema");
 const mail_service_1 = require("../services/mail.service");
-const roles_module_1 = require("../roles/roles.module");
+const core_1 = require("@nestjs/core");
+const role_guard_1 = require("../role/role.guard");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            roles_module_1.RolesModule,
             mongoose_1.MongooseModule.forFeature([
                 {
                     name: user_schema_1.User.name,
@@ -38,7 +38,10 @@ AuthModule = __decorate([
             ]),
         ],
         controllers: [User_controller_1.AuthController],
-        providers: [User_service_1.AuthService, mail_service_1.MailService],
+        providers: [User_service_1.AuthService, mail_service_1.MailService, {
+                provide: core_1.APP_GUARD,
+                useClass: role_guard_1.RoleGuard,
+            },],
         exports: [User_service_1.AuthService],
     })
 ], AuthModule);

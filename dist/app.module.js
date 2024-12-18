@@ -14,7 +14,6 @@ const User_module_1 = require("./User/User.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
-const roles_module_1 = require("./roles/roles.module");
 const todo_module_1 = require("./todo/todo.module");
 const consultation_schedule_module_1 = require("./consultation-schedule/consultation-schedule.module");
 const consultation_schedule_controller_1 = require("./consultation-schedule/consultation-schedule.controller");
@@ -55,7 +54,6 @@ AppModule = __decorate([
             }),
             checkin_module_1.CheckInModule,
             User_module_1.AuthModule,
-            roles_module_1.RolesModule,
             todo_module_1.ToDoModule,
             category_module_1.CategoryModule,
             consultation_schedule_module_1.ConsultationScheduleModule,

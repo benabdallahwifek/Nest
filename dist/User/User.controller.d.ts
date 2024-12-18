@@ -59,4 +59,10 @@ export declare class AuthController {
         message: string;
     }>;
     resetPassword(resetPasswordDto: ResetPasswordDto): Promise<void>;
+    getMedecinDashboard(): {
+        message: string;
+    };
+    getUserDashboard(): {
+        message: string;
+    };
 }

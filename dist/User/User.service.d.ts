@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import { RefreshToken } from './schemas/refresh-token.schema';
 import { ResetToken } from './schemas/reset-token.schema';
 import { MailService } from 'src/services/mail.service';
-import { RolesService } from 'src/roles/roles.service';
 import { Permission } from 'src/guards/authorization.guard';
 export declare class AuthService {
     private UserModel;
@@ -14,10 +13,9 @@ export declare class AuthService {
     private ResetTokenModel;
     private jwtService;
     private mailService;
-    private rolesService;
     getUserRecommendations(userId: string): void;
     saveUserSelection(userId: string, doctorName: string, category: string): void;
-    constructor(UserModel: Model<User>, RefreshTokenModel: Model<RefreshToken>, ResetTokenModel: Model<ResetToken>, jwtService: JwtService, mailService: MailService, rolesService: RolesService);
+    constructor(UserModel: Model<User>, RefreshTokenModel: Model<RefreshToken>, ResetTokenModel: Model<ResetToken>, jwtService: JwtService, mailService: MailService);
     signup(signupData: SignupDto): Promise<mongoose.Document<unknown, {}, User> & User & Required<{
         _id: unknown;
     }> & {

@@ -9,6 +9,8 @@ import {
 } from './schemas/refresh-token.schema';
 import { ResetToken, ResetTokenSchema } from './schemas/reset-token.schema';
 import { MailService } from 'src/services/mail.service';
+import { APP_GUARD } from '@nestjs/core';
+import { RoleGuard } from 'src/role/role.guard';
 
 @Module({
   imports: [
@@ -28,7 +30,10 @@ import { MailService } from 'src/services/mail.service';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, MailService],
+  providers: [AuthService, MailService,{
+    provide: APP_GUARD,
+    useClass: RoleGuard,
+  },],
   exports: [AuthService],
 })
 export class AuthModule {}

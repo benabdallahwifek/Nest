@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { SignupDto } from './dtos/signup.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
+import { User, UserRole } from './schemas/user.schema';
 import mongoose, { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
@@ -39,44 +39,30 @@ export class AuthService {
   ) {}
 
   async signup(signupData: SignupDto) {
-    const { username, email, password, bio, imageUri } = signupData;
-
-    // Log des données reçues
-    console.log('Données d\'inscription reçues :', signupData);
-
+    const { username, email, password, bio, imageUri, role } = signupData;
+  
     // Vérification de l'email
-    console.log('Vérification de l\'email...');
     const emailInUse = await this.UserModel.findOne({ email });
     if (emailInUse) {
-      console.log('Erreur : L\'email est déjà utilisé.');
       throw new BadRequestException('Email already in use');
     }
-
+  
     // Hachage du mot de passe
-    console.log('Création du mot de passe haché...');
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Log du mot de passe haché
-    console.log('Mot de passe haché :', hashedPassword);
-
-    // Création du document utilisateur et enregistrement dans MongoDB
-    try {
-      console.log('Création de l\'utilisateur...');
-      const newUser = await this.UserModel.create({
-        username,
-        email,
-        password: hashedPassword,
-        bio,
-        imageUri,
-      });
-
-      console.log('Utilisateur créé avec succès :', newUser);
-      return newUser;
-    } catch (error) {
-      console.log('Erreur lors de la création de l\'utilisateur:', error);
-      throw new InternalServerErrorException('Erreur lors de la création de l\'utilisateur');
-    }
+  
+    // Création de l'utilisateur
+    const newUser = await this.UserModel.create({
+      username,
+      email,
+      password: hashedPassword,
+      bio,
+      imageUri,
+      role: role || UserRole.UserNormal, // Par défaut, "usernormal"
+    });
+  
+    return newUser;
   }
+  
 
   async login(credentials: LoginDto) {
     const { email, password } = credentials;
