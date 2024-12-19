@@ -10,7 +10,14 @@ export class CheckInService {
   ) {}
 
   async createCheckIn(data: Partial<CheckIn>): Promise<CheckIn> {
+    console.log('Saving check-in for user:', data.userId);
     const checkIn = new this.checkInModel(data);
     return checkIn.save();
   }
+  
+  async getCheckInsByUserId(userId: string): Promise<CheckIn[]> {
+    return this.checkInModel.find({ userId }).exec();
+  }
+  
+  
 }

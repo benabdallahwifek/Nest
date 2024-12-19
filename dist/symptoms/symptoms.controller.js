@@ -15,22 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SymptomsController = void 0;
 const common_1 = require("@nestjs/common");
 const symptoms_service_1 = require("./symptoms.service");
+const authentication_guard_1 = require("../guards/authentication.guard");
 let SymptomsController = class SymptomsController {
     constructor(symptomsService) {
         this.symptomsService = symptomsService;
     }
-    async saveSymptoms(symptomsData) {
-        console.log('Request received:', symptomsData);
-        const savedSymptoms = await this.symptomsService.saveSymptoms(symptomsData.userId, symptomsData.symptoms);
-        console.log('Saved symptoms:', savedSymptoms);
-        return savedSymptoms;
+    async saveSymptoms(req, symptoms) {
+        const userId = req.userId;
+        return this.symptomsService.saveSymptoms(userId, symptoms);
     }
 };
 __decorate([
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
     (0, common_1.Post)('save'),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)('symptoms')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Array]),
     __metadata("design:returntype", Promise)
 ], SymptomsController.prototype, "saveSymptoms", null);
 SymptomsController = __decorate([

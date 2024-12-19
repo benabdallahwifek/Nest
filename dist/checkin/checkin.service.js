@@ -22,8 +22,12 @@ let CheckInService = class CheckInService {
         this.checkInModel = checkInModel;
     }
     async createCheckIn(data) {
+        console.log('Saving check-in for user:', data.userId);
         const checkIn = new this.checkInModel(data);
         return checkIn.save();
+    }
+    async getCheckInsByUserId(userId) {
+        return this.checkInModel.find({ userId }).exec();
     }
 };
 CheckInService = __decorate([

@@ -10,12 +10,16 @@ exports.GeminiModule = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("@nestjs/axios");
 const gemini_service_1 = require("./gemini.service");
+const gemini_controller_1 = require("./gemini.controller");
+const symptoms_module_1 = require("../symptoms/symptoms.module");
+const checkin_module_1 = require("../checkin/checkin.module");
 let GeminiModule = class GeminiModule {
 };
 GeminiModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
+        imports: [axios_1.HttpModule, symptoms_module_1.SymptomsModule, checkin_module_1.CheckInModule],
         providers: [gemini_service_1.GeminiService],
+        controllers: [gemini_controller_1.GeminiController],
         exports: [gemini_service_1.GeminiService],
     })
 ], GeminiModule);

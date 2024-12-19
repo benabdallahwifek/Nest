@@ -17,7 +17,7 @@ export class AuthenticationGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
-    const token = this.extractTokenFromHeader(request);
+    const token = this.extractToken(request);
 
     if (!token) {
       throw new UnauthorizedException('Token is missing');
@@ -33,7 +33,19 @@ export class AuthenticationGuard implements CanActivate {
     }
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
-    return request.headers.authorization?.split(' ')[1];
+  private extractToken(request: Request): string | undefined {
+    // Vérifie d'abord dans les Headers
+    const authHeader = request.headers.authorization;
+    if (authHeader) {
+      return authHeader.split(' ')[1];
+    }
+
+    // Vérifie dans les Query Params
+    const tokenFromQuery = request.query['Authorization'] as string;
+    if (tokenFromQuery) {
+      return tokenFromQuery.split(' ')[1] || tokenFromQuery;
+    }
+
+    return undefined;
   }
 }

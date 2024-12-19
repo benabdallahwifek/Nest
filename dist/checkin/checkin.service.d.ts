@@ -4,4 +4,5 @@ export declare class CheckInService {
     private checkInModel;
     constructor(checkInModel: Model<CheckInDocument>);
     createCheckIn(data: Partial<CheckIn>): Promise<CheckIn>;
+    getCheckInsByUserId(userId: string): Promise<CheckIn[]>;
 }

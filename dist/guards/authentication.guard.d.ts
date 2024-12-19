@@ -5,5 +5,5 @@ export declare class AuthenticationGuard implements CanActivate {
     private jwtService;
     constructor(jwtService: JwtService);
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean>;
-    private extractTokenFromHeader;
+    private extractToken;
 }

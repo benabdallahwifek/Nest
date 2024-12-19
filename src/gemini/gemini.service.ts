@@ -35,4 +35,15 @@ export class GeminiService {
       throw new Error('Impossible de générer la réponse avec l\'API Gemini');
     }
   }
+  async getAdvice(symptoms: string[], mood: string): Promise<string> {
+    const prompt = `
+      Voici les symptômes de l'utilisateur : ${symptoms.join(', ') || 'Aucun symptôme'}.
+      Son humeur actuelle est : ${mood || 'Non précisée'}.
+      Donnez des conseils pour améliorer son bien-être en prenant en compte ces informations.
+    `;
+  
+    const response = await this.getAIResponse(prompt);
+    return response || 'Aucun conseil disponible pour le moment.';
+  }
+  
 }

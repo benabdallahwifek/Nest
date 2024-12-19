@@ -5,4 +5,5 @@ export declare class GeminiService {
     private readonly API_KEY;
     constructor(httpService: HttpService);
     getAIResponse(question: string): Promise<string>;
+    getAdvice(symptoms: string[], mood: string): Promise<string>;
 }

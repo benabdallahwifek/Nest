@@ -15,19 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckInController = void 0;
 const common_1 = require("@nestjs/common");
 const checkin_service_1 = require("./checkin.service");
+const authentication_guard_1 = require("../guards/authentication.guard");
 let CheckInController = class CheckInController {
     constructor(checkInService) {
         this.checkInService = checkInService;
     }
-    async createCheckIn(data) {
-        return this.checkInService.createCheckIn(data);
+    async createCheckIn(req, data) {
+        const userId = req.userId;
+        return this.checkInService.createCheckIn(Object.assign(Object.assign({}, data), { userId }));
     }
 };
 __decorate([
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], CheckInController.prototype, "createCheckIn", null);
 CheckInController = __decorate([

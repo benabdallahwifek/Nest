@@ -11,6 +11,8 @@ import { ResetToken, ResetTokenSchema } from './schemas/reset-token.schema';
 import { MailService } from 'src/services/mail.service';
 import { APP_GUARD } from '@nestjs/core';
 import { RoleGuard } from 'src/role/role.guard';
+import { SymptomsModule } from 'src/symptoms/symptoms.module';
+import { CheckInModule } from 'src/checkin/checkin.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { RoleGuard } from 'src/role/role.guard';
         schema: ResetTokenSchema,
       },
     ]),
+    SymptomsModule, 
+    CheckInModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, MailService,{

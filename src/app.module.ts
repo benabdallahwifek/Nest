@@ -20,6 +20,7 @@ import { CheckInService } from './checkin/checkin.service';
 import { GeminiModule } from './gemini/gemini.module';
 import { ResponseeModule } from './responsee/responsee.module';
 import { PredictionModule } from './prediction/prediction.module';
+import { DoctorModule } from './doctor/doctor.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { PredictionModule } from './prediction/prediction.module';
     GeminiModule,
     ResponseeModule,
     PredictionModule,
+    DoctorModule,
   ],
   controllers: [AppController, CategoryController, ConsultationScheduleController],
   providers: [AppService, CategoryService, ConsultationScheduleService],

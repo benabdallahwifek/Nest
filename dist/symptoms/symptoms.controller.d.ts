@@ -28,10 +28,7 @@ import { SymptomsService } from './symptoms.service';
 export declare class SymptomsController {
     private readonly symptomsService;
     constructor(symptomsService: SymptomsService);
-    saveSymptoms(symptomsData: {
-        userId: string;
-        symptoms: string[];
-    }): Promise<import("mongoose").Document<unknown, {}, import("./symptoms.dto").Symptom> & import("./symptoms.dto").Symptom & Required<{
+    saveSymptoms(req: any, symptoms: string[]): Promise<import("mongoose").Document<unknown, {}, import("./symptoms.dto").Symptom> & import("./symptoms.dto").Symptom & Required<{
         _id: unknown;
     }> & {
         __v: number;

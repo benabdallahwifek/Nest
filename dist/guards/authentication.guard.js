@@ -18,7 +18,7 @@ let AuthenticationGuard = class AuthenticationGuard {
     }
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        const token = this.extractTokenFromHeader(request);
+        const token = this.extractToken(request);
         if (!token) {
             throw new common_1.UnauthorizedException('Token is missing');
         }
@@ -32,9 +32,16 @@ let AuthenticationGuard = class AuthenticationGuard {
             throw new common_1.UnauthorizedException('Invalid Token');
         }
     }
-    extractTokenFromHeader(request) {
-        var _a;
-        return (_a = request.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+    extractToken(request) {
+        const authHeader = request.headers.authorization;
+        if (authHeader) {
+            return authHeader.split(' ')[1];
+        }
+        const tokenFromQuery = request.query['Authorization'];
+        if (tokenFromQuery) {
+            return tokenFromQuery.split(' ')[1] || tokenFromQuery;
+        }
+        return undefined;
     }
 };
 AuthenticationGuard = __decorate([

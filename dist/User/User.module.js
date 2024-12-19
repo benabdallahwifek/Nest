@@ -17,6 +17,8 @@ const reset_token_schema_1 = require("./schemas/reset-token.schema");
 const mail_service_1 = require("../services/mail.service");
 const core_1 = require("@nestjs/core");
 const role_guard_1 = require("../role/role.guard");
+const symptoms_module_1 = require("../symptoms/symptoms.module");
+const checkin_module_1 = require("../checkin/checkin.module");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -36,6 +38,8 @@ AuthModule = __decorate([
                     schema: reset_token_schema_1.ResetTokenSchema,
                 },
             ]),
+            symptoms_module_1.SymptomsModule,
+            checkin_module_1.CheckInModule,
         ],
         controllers: [User_controller_1.AuthController],
         providers: [User_service_1.AuthService, mail_service_1.MailService, {

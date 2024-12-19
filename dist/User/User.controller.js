@@ -22,12 +22,25 @@ const authentication_guard_1 = require("../guards/authentication.guard");
 const forgot_password_dto_1 = require("./dtos/forgot-password.dto");
 const reset_password_dto_1 = require("./dtos/reset-password.dto");
 const User_service_1 = require("./User.service");
-const role_guard_1 = require("../role/role.guard");
 const user_schema_1 = require("./schemas/user.schema");
 const role_decorator_1 = require("../role/role.decorator");
+const symptoms_service_1 = require("../symptoms/symptoms.service");
+const checkin_service_1 = require("../checkin/checkin.service");
 let AuthController = class AuthController {
-    constructor(authService) {
+    constructor(authService, symptomsService, checkInService) {
         this.authService = authService;
+        this.symptomsService = symptomsService;
+        this.checkInService = checkInService;
+    }
+    async getUserData(req) {
+        const userId = req.userId;
+        const symptoms = await this.symptomsService.getSymptomsByUserId(userId);
+        const checkIns = await this.checkInService.getCheckInsByUserId(userId);
+        return {
+            userId,
+            symptoms,
+            checkIns,
+        };
     }
     async getRecommendations(userId) {
         return this.authService.getUserRecommendations(userId);
@@ -60,6 +73,14 @@ let AuthController = class AuthController {
         return { message: 'Bienvenue sur le tableau de bord des utilisateurs normaux.' };
     }
 };
+__decorate([
+    (0, common_1.Get)('user-data'),
+    (0, common_1.UseGuards)(authentication_guard_1.AuthenticationGuard),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getUserData", null);
 __decorate([
     (0, common_1.Get)('recommendations/:userId'),
     __param(0, (0, common_1.Param)('userId')),
@@ -136,8 +157,9 @@ __decorate([
 ], AuthController.prototype, "getUserDashboard", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
-    (0, common_1.UseGuards)(role_guard_1.RoleGuard),
-    __metadata("design:paramtypes", [User_service_1.AuthService])
+    __metadata("design:paramtypes", [User_service_1.AuthService,
+        symptoms_service_1.SymptomsService,
+        checkin_service_1.CheckInService])
 ], AuthController);
 exports.AuthController = AuthController;
 //# sourceMappingURL=User.controller.js.map

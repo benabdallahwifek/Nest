@@ -33,4 +33,5 @@ export declare class SymptomsService {
     }> & {
         __v: number;
     }>;
+    getSymptomsByUserId(userId: string): Promise<Symptom | null>;
 }

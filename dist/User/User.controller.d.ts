@@ -31,9 +31,18 @@ import { ChangePasswordDto } from './dtos/change-password.dto';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { AuthService } from './User.service';
+import { SymptomsService } from 'src/symptoms/symptoms.service';
+import { CheckInService } from 'src/checkin/checkin.service';
 export declare class AuthController {
     private readonly authService;
-    constructor(authService: AuthService);
+    private readonly symptomsService;
+    private readonly checkInService;
+    constructor(authService: AuthService, symptomsService: SymptomsService, checkInService: CheckInService);
+    getUserData(req: any): Promise<{
+        userId: any;
+        symptoms: import("../symptoms/symptoms.dto").Symptom;
+        checkIns: import("../checkin/checkin.schema").CheckIn[];
+    }>;
     getRecommendations(userId: string): Promise<void>;
     saveSelection(body: {
         userId: string;

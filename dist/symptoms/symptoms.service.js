@@ -22,11 +22,12 @@ let SymptomsService = class SymptomsService {
         this.symptomModel = symptomModel;
     }
     async saveSymptoms(userId, symptoms) {
-        console.log('Saving symptoms to DB:', { userId, symptoms });
+        console.log('Saving symptoms for user:', { userId, symptoms });
         const newRecord = new this.symptomModel({ userId, symptoms });
-        const result = await newRecord.save();
-        console.log('Save successful:', result);
-        return result;
+        return newRecord.save();
+    }
+    async getSymptomsByUserId(userId) {
+        return this.symptomModel.findOne({ userId }).exec();
     }
 };
 SymptomsService = __decorate([

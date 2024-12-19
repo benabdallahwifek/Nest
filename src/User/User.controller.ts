@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get,Request, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { SignupDto } from './dtos/signup.dto';
 import { LoginDto } from './dtos/login.dto';
 import { RefreshTokenDto } from './dtos/refresh-tokens.dto';
@@ -10,12 +10,31 @@ import { AuthService } from './User.service';
 import { RoleGuard } from '../role/role.guard';
 import { UserRole } from './schemas/user.schema';
 import { Role } from 'src/role/role.decorator';
+import { SymptomsService } from 'src/symptoms/symptoms.service';
+import { CheckInService } from 'src/checkin/checkin.service';
 
 @Controller('auth')
-@UseGuards(RoleGuard) // Active le RoleGuard pour tout le contrôleur
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly symptomsService: SymptomsService,
+    private readonly checkInService: CheckInService,
+  ) {}
+  @Get('user-data')
+  @UseGuards(AuthenticationGuard)
+  async getUserData(@Request() req) {
+    const userId = req.userId; // Obtenu grâce au guard AuthenticationGuard
 
+    // Récupérer les données utilisateur
+    const symptoms = await this.symptomsService.getSymptomsByUserId(userId);
+    const checkIns = await this.checkInService.getCheckInsByUserId(userId);
+
+    return {
+      userId,
+      symptoms,
+      checkIns,
+    };
+  }
   @Get('recommendations/:userId')
   async getRecommendations(@Param('userId') userId: string) {
     return this.authService.getUserRecommendations(userId);
