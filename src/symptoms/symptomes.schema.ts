@@ -11,5 +11,5 @@ export class Symptom {
   @Prop({ required: true })
   symptoms: string[];
 }
-
+            
 export const SymptomSchema = SchemaFactory.createForClass(Symptom);

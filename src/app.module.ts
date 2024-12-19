@@ -21,6 +21,7 @@ import { GeminiModule } from './gemini/gemini.module';
 import { ResponseeModule } from './responsee/responsee.module';
 import { PredictionModule } from './prediction/prediction.module';
 import { DoctorModule } from './doctor/doctor.module';
+import { VaccinationModule } from './vaccination/vaccination.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { DoctorModule } from './doctor/doctor.module';
     ResponseeModule,
     PredictionModule,
     DoctorModule,
+    VaccinationModule,
   ],
   controllers: [AppController, CategoryController, ConsultationScheduleController],
   providers: [AppService, CategoryService, ConsultationScheduleService],
