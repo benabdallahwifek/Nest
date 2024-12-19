@@ -17,7 +17,7 @@ let GeminiService = class GeminiService {
     constructor(httpService) {
         this.httpService = httpService;
         this.GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
-        this.API_KEY = 'AIzaSyBKs8Yrr1IVA2mPRuvr042cG4_09dyhssg';
+        this.API_KEY = 'AIzaSyD_NFUfqhcOPu0EXOKje47oMJJ2gFE3WrU';
     }
     async getAIResponse(question) {
         var _a, _b, _c, _d, _e;
