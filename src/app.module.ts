@@ -22,6 +22,9 @@ import { ResponseeModule } from './responsee/responsee.module';
 import { PredictionModule } from './prediction/prediction.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { VaccinationModule } from './vaccination/vaccination.module';
+import { BabyModule } from './baby/baby.module';
+import { MotherModule } from './mother/mother.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -56,6 +59,9 @@ import { VaccinationModule } from './vaccination/vaccination.module';
     PredictionModule,
     DoctorModule,
     VaccinationModule,
+    BabyModule,
+    MotherModule,
+    HealthModule,
   ],
   controllers: [AppController, CategoryController, ConsultationScheduleController],
   providers: [AppService, CategoryService, ConsultationScheduleService],

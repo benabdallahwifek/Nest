@@ -29,6 +29,9 @@ const responsee_module_1 = require("./responsee/responsee.module");
 const prediction_module_1 = require("./prediction/prediction.module");
 const doctor_module_1 = require("./doctor/doctor.module");
 const vaccination_module_1 = require("./vaccination/vaccination.module");
+const baby_module_1 = require("./baby/baby.module");
+const mother_module_1 = require("./mother/mother.module");
+const health_module_1 = require("./health/health.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -65,6 +68,9 @@ AppModule = __decorate([
             prediction_module_1.PredictionModule,
             doctor_module_1.DoctorModule,
             vaccination_module_1.VaccinationModule,
+            baby_module_1.BabyModule,
+            mother_module_1.MotherModule,
+            health_module_1.HealthModule,
         ],
         controllers: [app_controller_1.AppController, category_controller_1.CategoryController, consultation_schedule_controller_1.ConsultationScheduleController],
         providers: [app_service_1.AppService, category_service_1.CategoryService, consultation_schedule_service_1.ConsultationScheduleService],
